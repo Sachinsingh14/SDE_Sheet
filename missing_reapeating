@@ -1,0 +1,17 @@
+vector<int>hash(n+1,0);
+	for(auto i:arr){
+		hash[i]++;
+	}
+	int mis=0,rep=0;
+	for(int i=1;i<n+1;i++){
+		if(hash[i]==0){
+			mis=i;
+		}
+		else if(hash[i]>1){
+			rep=i;
+		}
+	}
+	pair<int,int>ans;
+	ans={mis,rep};
+	return ans;
+	
