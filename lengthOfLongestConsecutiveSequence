@@ -1,0 +1,20 @@
+if(nums.size()==0) return 0;
+        int ans=1;
+        int cnt=0;
+        unordered_set<int>s;
+        for(auto i:nums){
+            s.insert(i);
+        }
+        for(auto it:s){
+            if(s.find(it-1)==s.end()){
+                int x=it;
+                int cnt=1;
+                while(s.find(x+1)!=s.end()){
+                    x=x+1;
+                    cnt++;
+                }
+                ans=max(cnt,ans);
+            }
+
+        }
+        return ans;
