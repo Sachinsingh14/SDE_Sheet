@@ -1,0 +1,66 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        // if(head->next==NULL){
+        //     return NULL;
+        // }
+        // ListNode*temp=head;
+        // int len=0;
+        // while(temp!=NULL){
+        //     len++;
+        //     temp=temp->next;
+        // }
+        // int i=len-n+1;
+        // ListNode*curr=head;
+        // ListNode*prev=NULL;
+        // i-=1;
+        // while(i--){
+        //     prev=curr;
+        //     curr=curr->next;
+        // }
+        // if(prev==NULL){
+        //     ListNode*y=curr->next;
+        //     delete curr;
+        //     head=y;
+        //     return head;
+        // }
+        // if(curr->next==NULL){
+        //     prev->next=NULL;
+        //     return head;
+        // }
+        // ListNode*temp1=curr->next;
+        // prev->next=temp1;
+        // curr->next=NULL;
+        // delete curr;
+        // return head;
+
+
+        //optimised solution-->>
+        ListNode*dummy=new ListNode(-1);
+        dummy->next=head;
+        ListNode*slow=dummy;
+        ListNode*fast=dummy;
+        for(int i=0;i<n;i++){
+            fast=fast->next;
+        }
+        while(fast->next!=NULL){
+            fast=fast->next;
+            slow=slow->next;
+        }
+        //we have to delete slow->next-->
+        slow->next=slow->next->next;
+        return dummy->next;
+
+
+    }
+};
