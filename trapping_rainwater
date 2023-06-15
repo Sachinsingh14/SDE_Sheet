@@ -1,0 +1,55 @@
+class Solution {
+public:
+    // vector<int> func(vector<int>height){
+    //     vector<int>ans;
+    //     ans.push_back(height[0]);
+    //     int mx=height[0];
+    //     int i=1;
+    //     while(i<height.size()){
+    //         if(height[i]>mx){
+    //             mx=height[i];
+    //         }
+    //         ans.push_back(mx);
+    //         i++;
+    //     }
+    //     return ans;
+
+    // }
+    int trap(vector<int>& height) {
+        // vector<int>pre=func(height);
+        // reverse(height.begin(),height.end());
+
+        // vector<int>suf=func(height);
+        // for(auto i:pre){
+        //     cout<<i<<" ";
+        // }
+        // reverse(suf.begin(),suf.end());
+        // reverse(height.begin(),height.end());
+        // int ans=0;
+        // for(int i=0;i<height.size();i++){
+        //     ans+=min(pre[i],suf[i])-height[i];
+        // }
+        // return ans;
+
+        //two pointer approach-->>
+        int n=height.size();
+        int left=0,right=n-1;
+        int leftmax=0;
+        int rightmax=0;
+        int ans=0;
+        while(left<=right){
+            if(height[left]<=height[right]){
+                if(height[left]>=leftmax) leftmax=height[left];
+                else ans+=leftmax-height[left];
+                left++;
+            }
+            else{
+                 if(height[right]>=rightmax) rightmax=height[right];
+                else ans+=rightmax-height[right];
+                right--;
+            }
+        }
+        return ans;
+
+    }
+};
