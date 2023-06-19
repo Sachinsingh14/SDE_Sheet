@@ -1,0 +1,20 @@
+
+void func(int ind,vector<string>&ans,string s,int n){
+    if(ind>=n){
+        ans.push_back(s);
+        return ;
+    }
+    for(int i=ind;i<n;i++){
+        swap(s[ind],s[i]);
+        func(ind+1,ans,s,n);
+        swap(s[ind],s[i]);
+    }
+
+}
+vector<string> findPermutations(string &s) {
+
+    int n=s.size();
+    vector<string>ans;
+    func(0,ans,s,n);
+    return ans;
+}
