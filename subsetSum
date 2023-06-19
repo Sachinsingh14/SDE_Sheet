@@ -1,0 +1,19 @@
+#include <bits/stdc++.h> 
+void func(int ind,vector<int>&num,int N,vector<int>&ans,int sum){
+        if(ind==N){
+            ans.push_back(sum);
+            return ;
+        }
+        func(ind+1,num,N,ans,sum+num[ind]);
+        func(ind+1,num,N,ans,sum);
+    }
+vector<int> subsetSum(vector<int> &num)
+{
+    
+     vector<int>ans;
+        int sum=0;
+        func(0,num,num.size(),ans,sum);
+        sort(ans.begin(),ans.end());
+        return ans;
+
+}
