@@ -1,0 +1,42 @@
+class Solution{
+public:
+    // Function to determine if graph can be coloured with at most M colours such
+    // that no two adjacent vertices of graph are coloured with same colour.
+    bool possible(int node,int col,vector<int>adj[],vector<int>&color){
+        for(auto it:adj[node]){
+            if(color[it]==col){
+                return false;
+            }
+        }
+        return true;
+    }
+    bool solve(int node,vector<int>adj[],int n,int m,vector<int>&color){
+        if(node==n) return true;
+        for(int col=1;col<=m;col++){
+            if(possible(node,col,adj,color)==true){
+                color[node]=col;
+                if(solve(node+1,adj,n,m,color)==true){
+                    return true;
+                }
+                else color[node]=0;
+            }
+        }
+        return false;
+    }
+    bool graphColoring(bool graph[101][101], int m, int n) {
+        // your code here
+        vector<int>adj[n];
+        vector<int>color(n,0);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(graph[i][j]==1){
+                    int u=i;
+                    int v=j;
+                    adj[u].push_back(v);
+                    adj[v].push_back(u);
+                }
+            }
+        }
+        return solve(0,adj,n,m,color);
+    }
+};
