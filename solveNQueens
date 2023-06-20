@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+bool issafe(int row,int col,vector<vector<int>>&board,int n){
+    int r=row,c=col;
+
+    //check left upper diagonal-->>
+    while(row>=0 and col>=0){
+        if(board[row][col]==1) return false;
+        row--;
+        col--;
+    }
+    row=r;
+    col=c;
+    //check left horizontal-->>
+    while(col>=0){
+        if(board[row][col]==1) return false;
+        col--;
+    }
+
+    col=c;
+
+    //check left lower diagonal-->>
+    while(row<n and col>=0){
+        if(board[row][col]==1) return false;
+        row++;
+        col--;
+    }
+
+    return true;
+}
+
+void solve(int col,vector<vector<int>>&board,vector<vector<int>>&ans,int n){
+    if(col==n){
+        vector<int>tmp;
+        for(auto it:board) {
+            for(auto d:it) {
+                tmp.push_back(d);
+            }
+        }
+        ans.push_back(tmp);
+        return;
+    }
+
+    for(int row=0;row<n;row++){
+        if(issafe(row,col,board,n)){
+            board[row][col]=1;
+            solve(col+1,board,ans,n);
+            board[row][col]=0;
+        }
+    }
+}
+
+
+vector<vector<int>> solveNQueens(int n) {
+    vector<vector<int>>ans;
+    vector<vector<int>>board(n,vector<int>(n,0));
+
+    solve(0,board,ans,n);
+    return ans;
+
+}
