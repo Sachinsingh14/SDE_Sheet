@@ -1,0 +1,51 @@
+#include <bits/stdc++.h> 
+class Queue {
+private:
+int *arr;
+int ft;
+int rear;
+int size;
+public:
+    Queue() {
+        // Implement the Constructor
+        size=10001;
+        arr=new int[size];
+        ft=0;
+        rear=0;
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty() {
+        // Implement the isEmpty() function
+        if(rear==0){
+            return true;
+        }
+        return false;
+    }
+
+    void enqueue(int data) {
+        // Implement the enqueue() function
+        if(rear>=size) return;
+        arr[rear]=data;
+        rear++;
+    }
+
+    int dequeue() {
+        // Implement the dequeue() function
+        if(rear==ft) return -1;
+        int temp=arr[ft++];
+        if(ft==rear){
+            ft=0;
+            rear=0;
+        }
+        return temp;
+
+    }
+
+    int front() {
+        // Implement the ft() function
+        if(ft==rear) return -1;
+        return arr[ft];
+    }
+};
