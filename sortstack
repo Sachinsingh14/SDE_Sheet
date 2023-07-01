@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+void insert(stack<int>&stack,int t){
+	if(stack.size()==0 || stack.top()<=t){
+		stack.push(t);
+		return;
+	}
+	int f=stack.top();
+	stack.pop();
+	insert(stack,t);
+	stack.push(f);
+}
+void sortStack(stack<int> &stack)
+{
+	if(stack.size()==1) return;
+
+	int a=stack.top();
+	stack.pop();
+	sortStack(stack);
+	insert(stack,a);
+
+}
+
