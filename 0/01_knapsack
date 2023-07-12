@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+int func(int ind,int w,vector<int>&values,vector<int>&weights,vector<vector<int>>&dp){
+	if(ind==0){
+		if(w>=weights[0]){
+			return values[0];
+		}
+		else{
+			return 0;
+		}
+	}
+	if(dp[ind][w]!=-1) return dp[ind][w];
+	int pick=-1e9,notpick;
+	if(w>=weights[ind]){
+		pick=values[ind]+func(ind-1,w-weights[ind],values,weights,dp);
+	}
+	notpick=func(ind-1,w,values,weights,dp);
+	return dp[ind][w]=max(pick,notpick);
+}
+int maxProfit(vector<int> &values, vector<int> &weights, int n, int w)
+{
+	vector<vector<int>>dp(n,vector<int>(w+1,0));
+
+	for(int wt=0;wt<=w;wt++){
+		if(wt>=weights[0]){
+			dp[0][wt]=values[0];
+		}
+	}
+
+	for(int ind=1;ind<n;ind++){
+		for(int wt=0;wt<=w;wt++){
+			int pick=-1e9,notpick;
+			if(wt>=weights[ind]){
+				pick=values[ind]+dp[ind-1][wt-weights[ind]];
+			}
+			notpick=dp[ind-1][wt];
+			dp[ind][wt]=max(pick,notpick);
+		}
+	}
+	return dp[n-1][w];
+
+}
