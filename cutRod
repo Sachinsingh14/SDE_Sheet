@@ -1,0 +1,22 @@
+int func(int ind,int W,vector<int>&weights,vector<int>&price,vector<vector<int>>&dp){
+	if(ind==0){
+		return (W/weights[0])*price[0];
+	}
+	if(dp[ind][W]!=-1) return dp[ind][W];
+	int notpick=func(ind-1,W,weights,price,dp);
+	int pick=-1e9;
+	if(weights[ind]<=W){
+		pick=price[ind]+func(ind,W-weights[ind],weights,price,dp);
+	}
+	return dp[ind][W]=max(pick,notpick);
+}
+int cutRod(vector<int> &price, int n)
+{
+	vector<int>weights(n);
+	for(int i=0;i<n;i++){
+		weights[i]=i+1;
+	}
+	int W=n;
+	vector<vector<int>>dp(n,vector<int>(W+1,-1));
+	return func(n-1,W,weights,price,dp);
+}
