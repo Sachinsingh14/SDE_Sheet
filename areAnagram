@@ -1,0 +1,15 @@
+#include <bits/stdc++.h> 
+bool areAnagram(string &str1, string &str2){
+    vector<int>arr(26,0);
+    for(auto c:str1){
+        arr[c-'a']++;
+    }
+    for(auto c:str2){
+        arr[c-'a']--;
+    }
+    for(auto val:arr){
+        if(val!=0) return false;
+    }
+    return true;
+    
+}
