@@ -1,0 +1,74 @@
+#include <bits/stdc++.h> 
+class TreeNode {
+	public:
+	    int data;
+	    TreeNode* left;
+	    TreeNode* right;
+
+	    TreeNode(int data) {
+	        this->data = data;
+	        this->left = nullptr;
+	        this->right = nullptr;
+	    }
+};
+
+ int search(vector<int>inorder,int val){
+    for(int i=0;i<inorder.size();i++){
+        if(inorder[i]==val) return i;
+    }
+}
+vector<int>findfunc(vector<int>inorder,vector<int>levelOrder,int i,int j){
+	unordered_set<int>s;
+	vector<int>ans;
+	for(int ind=i;ind<=j;ind++){
+		s.insert(inorder[ind]);
+	}
+	for(auto it:levelOrder){
+		if(s.find(it)!=s.end()){
+			ans.push_back(it);
+		}
+	}
+	return ans;
+}
+vector<int>infunc(vector<int>inorder,int i,int j){
+	vector<int>ans;
+	for(int ind=i;ind<=j;ind++){
+		ans.push_back(inorder[ind]);
+	}
+	return ans;
+}
+TreeNode* func(vector<int>inorder,vector<int>levelOrder){
+	if(inorder.size()==0) return NULL;
+
+	TreeNode*root=new TreeNode(levelOrder[0]);
+
+	int mid=search(inorder,levelOrder[0]);
+	vector<int>leftlvl=findfunc(inorder,levelOrder,0,mid-1);
+	vector<int>rightlvl=findfunc(inorder,levelOrder,mid+1,inorder.size()-1);
+
+	vector<int>inleft=infunc(inorder,0,mid-1);
+	vector<int>inright=infunc(inorder,mid+1,inorder.size()-1);
+
+
+	root->left=func(inleft,leftlvl);
+	root->right=func(inright,rightlvl);
+	return root;
+}
+
+TreeNode* getTreeFromInorderAndLevelorder(int n, vector<int> &inOrder, vector<int> &levelOrder)
+{
+	return func(inOrder,levelOrder);
+}
+int maxDepth(TreeNode* root) {
+        if(root==NULL){
+            return 0;
+        }
+        int left=maxDepth(root->left);
+        int right=maxDepth(root->right);
+
+        return max(left,right)+1;
+    }
+int heightOfTheTree(vector<int>& inorder, vector<int>& levelOrder, int N){
+	TreeNode*root=getTreeFromInorderAndLevelorder(N,inorder,levelOrder);
+	return maxDepth(root)-1;
+}
