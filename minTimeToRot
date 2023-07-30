@@ -1,0 +1,51 @@
+
+
+#include<queue>
+int minTimeToRot(vector<vector<int>>& grid, int n, int m)
+{
+   
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        queue<vector<int>>q;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==2){
+                    vector<int>v={i,j,0};
+                    q.push(v);
+                    vis[i][j]=2;
+                }
+            }
+        }
+        int ans=0;
+
+        while(!q.empty()){
+            auto v=q.front();
+            int r=v[0];
+            int c=v[1];
+            int t=v[2];
+            ans=max(ans,t);
+            q.pop();
+
+            for(int dr=-1;dr<=1;dr++){
+                for(int dc=-1;dc<=1;dc++){
+                    int nr=r+dr;
+                    int nc=c+dc;
+                    if(dr==0 or dc==0){
+                        if(nr>=0 and nr<n and nc>=0 and nc<m and vis[nr][nc]!=2 and grid[nr][nc]==1){
+                            q.push({nr,nc,t+1});
+                            vis[nr][nc]=2;
+                        }
+                    }
+                }
+            }
+            
+
+        }
+        for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    if(vis[i][j]!=2 and grid[i][j]==1){
+                        return -1;
+                    }
+                }
+            }
+           return ans;
+}
